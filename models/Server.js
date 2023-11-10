@@ -28,7 +28,9 @@ class Server {
     this.app.use(express.static('public'));
   }
 
-  routes() {}
+  routes() {
+    this.app.use(this.paths.auth, require('../routes/auth.routes'));
+  }
 
   dbConnection() {
     createConnectionDB();
