@@ -1,4 +1,5 @@
 const z = require('zod');
+const { verifyAccessToken } = require('../utils');
 
 const loginSchema = z.object({
   studentId: z
@@ -20,7 +21,30 @@ const recoveryPasswordSchema = z.object({
     ),
 });
 
+const resetPasswordSchema = z.object({
+  password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
+});
+
+const resetPasswordParamsSchema = z.object({
+  userId: z.string().refine(
+    (data) => {
+      const isIdValid = mongoose.Types.ObjectId.isValid(data);
+      return isIdValid;
+    },
+    { message: 'El id no es válido' }
+  ),
+  recoveryAccessToken: z.string().refine(
+    async (token) => {
+      const isTokenValid = await verifyAccessToken(token);
+      return !isTokenValid;
+    },
+    { message: 'El token no es válido' }
+  ),
+});
+
 module.exports = {
   loginSchema,
   recoveryPasswordSchema,
+  resetPasswordSchema,
+  resetPasswordParamsSchema,
 };

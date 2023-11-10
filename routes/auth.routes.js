@@ -1,6 +1,11 @@
 const { Router } = require('express');
-const { loginSchema, recoveryPasswordSchema } = require('../schemas/auth.schema');
-const { validateRequestBody } = require('../middlewares');
+const {
+  loginSchema,
+  recoveryPasswordSchema,
+  resetPasswordParamsSchema,
+  resetPasswordSchema,
+} = require('../schemas/auth.schema');
+const { validateRequestBody, validateRequestParams } = require('../middlewares');
 const { Auth } = require('../controllers');
 
 const router = Router();
@@ -16,6 +21,11 @@ router.post(
 );
 
 //TODO: Especificar las validaciones para resetPassword
-router.post('/reset-password/', Auth.resetPassword);
+router.post(
+  '/reset-password/:userId/:recoveryAccessToken',
+  validateRequestParams(resetPasswordParamsSchema),
+  validateRequestBody(resetPasswordSchema),
+  Auth.resetPassword
+);
 
 module.exports = router;

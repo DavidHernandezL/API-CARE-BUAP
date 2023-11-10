@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 
-const { createAccessToken } = require('../utils');
+const { createAccessToken, verifyAccessToken } = require('../utils');
 const { transporter, htmlMail } = require('../config');
 
 const login = async (req, res) => {
@@ -68,7 +68,30 @@ const recoveryPassword = async (req, res) => {
 
 //TODO: Verificar la funcionalidad de resetPassword
 const resetPassword = async (req, res) => {
-  res.json({ message: 'reset-password' });
+  const { userId } = req.params;
+  const { password } = req.body;
+
+  const userFounded = await User.findById(userId);
+  if (!userFounded) {
+    return res.status(400).json({
+      errors: [{ msg: 'El usuario no existe' }],
+    });
+  }
+
+  try {
+    const salt = bcrypt.genSaltSync();
+    const newPassword = bcrypt.hashSync(password, salt);
+    userFounded.password = newPassword;
+
+    await userFounded.save();
+
+    res.json({ status: 'OK', message: 'Contraseña actualizada' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errors: [{ msg: 'Error en el servidor' }],
+    });
+  }
 };
 
 module.exports = {
