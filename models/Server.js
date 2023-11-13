@@ -11,6 +11,7 @@ class Server {
     this.paths = {
       auth: '/api/auth',
       users: '/api/users',
+      journals: '/api/journals',
     };
 
     this.dbConnection();
@@ -30,6 +31,9 @@ class Server {
 
   routes() {
     this.app.use(this.paths.auth, require('../routes/auth.routes'));
+    //TODO: Hacer test sobre los endpoint de usuarios y diarios para verificar las validaciones funcionen correctamente
+    this.app.use(this.paths.users, require('../routes/user.routes'));
+    this.app.use(this.paths.journals, require('../routes/journal.routes'));
   }
 
   dbConnection() {
