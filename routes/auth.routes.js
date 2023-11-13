@@ -20,11 +20,12 @@ router.post(
   Auth.recoveryPassword
 );
 
-//TODO: Especificar las validaciones para resetPassword
 router.post(
   '/reset-password/:userId/:recoveryAccessToken',
-  validateRequestParams(resetPasswordParamsSchema),
-  validateRequestBody(resetPasswordSchema),
+  [
+    validateRequestParams(resetPasswordParamsSchema),
+    validateRequestBody(resetPasswordSchema),
+  ],
   Auth.resetPassword
 );
 

@@ -66,10 +66,17 @@ const recoveryPassword = async (req, res) => {
   });
 };
 
-//TODO: Verificar la funcionalidad de resetPassword
 const resetPassword = async (req, res) => {
-  const { userId } = req.params;
+  const { userId, recoveryAccessToken } = req.params;
   const { password } = req.body;
+
+  const isTokenValid = await verifyAccessToken(recoveryAccessToken);
+
+  if (!isTokenValid) {
+    return res.status(400).json({
+      errors: [{ msg: 'El token no es válido' }],
+    });
+  }
 
   const userFounded = await User.findById(userId);
   if (!userFounded) {
