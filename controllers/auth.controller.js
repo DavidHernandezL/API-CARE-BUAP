@@ -21,7 +21,7 @@ const login = async (req, res) => {
     res.cookie('token', token);
     res.json(userFounded);
   } catch (error) {
-    console.log(error);
+    
 
     return res.status(500).json({
       msg: 'Fallo en el servidor',
@@ -94,7 +94,7 @@ const resetPassword = async (req, res) => {
 
     res.json({ status: 'OK', message: 'Contraseña actualizada' });
   } catch (error) {
-    console.log(error);
+    
     return res.status(500).json({
       errors: [{ msg: 'Error en el servidor' }],
     });

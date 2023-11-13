@@ -30,7 +30,7 @@ const createUser = async (req, res) => {
     res.cookie('token', token);
     res.json(userSaved);
   } catch (error) {
-    console.log(error);
+    
 
     res.status(500).json({
       msg: 'Fallo en el servidor',
