@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const cookies = require('cookie-parser');
 const { createConnectionDB } = require('../config');
 
 class Server {
@@ -25,6 +26,10 @@ class Server {
     this.app.use(express.json());
 
     this.app.use(morgan('dev'));
+
+    this.app.use(express.urlencoded({ extended: false }));
+
+    this.app.use(cookies());
 
     this.app.use(express.static('public'));
   }

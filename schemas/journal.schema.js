@@ -9,15 +9,11 @@ const createJournalSchema = z.object({
     .min(3, 'La descripción debe tener al menos 3 caracteres'),
   date: z
     .string({ required_error: 'La fecha es requerida' })
-    .min(3, 'La fecha debe tener al menos 3 caracteres'),
+    .min(3, 'La fecha debe tener al menos 3 caracteres')
+    .optional(),
   mood: z
     .string({ required_error: 'El estado de ánimo es requerido' })
     .min(3, 'El estado de ánimo debe tener al menos 3 caracteres'),
-  user: z
-    .string({ required_error: 'El usuario es requerido' })
-    .refine((data) => mongoose.Types.ObjectId.isValid(data), {
-      message: 'El id no es válido',
-    }),
 });
 
 const updateJournalSchema = z.object({

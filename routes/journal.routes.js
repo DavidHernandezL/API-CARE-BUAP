@@ -5,7 +5,7 @@ const { createJournalSchema, updateJournalSchema } = require('../schemas/journal
 const router = Router();
 
 router.get('/', verifyAuthToken, Journal.getJournal);
-router.get('/:diaryId', verifyAuthToken, Journal.getJournalEntry);
+router.get('/:journalId', verifyAuthToken, Journal.getJournalEntry);
 router.post(
   '/',
   verifyAuthToken,
@@ -13,7 +13,7 @@ router.post(
   Journal.createJournalEntry
 );
 router.put(
-  '/:diaryId',
+  '/:journalId',
   verifyAuthToken,
   validateRequestBody(updateJournalSchema),
   Journal.updateJournalEntry

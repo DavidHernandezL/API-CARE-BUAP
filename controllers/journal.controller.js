@@ -8,6 +8,7 @@ const getJournal = async (req, res) => {
 const getJournalEntry = async (req, res) => {
   const { id } = req.user;
   const { journalId } = req.params;
+
   const journalEntry = await Journal.findOne({ user: id, _id: journalId });
   if (!journalEntry)
     return res.status(400).json({ msg: 'No existe la entrada de diario' });
