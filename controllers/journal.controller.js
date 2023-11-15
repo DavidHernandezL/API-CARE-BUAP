@@ -12,7 +12,11 @@ const getJournalEntry = async (req, res) => {
   const journalEntry = await Journal.findOne({ user: id, _id: journalId });
   if (!journalEntry)
     return res.status(400).json({ msg: 'No existe la entrada de diario' });
-  res.json(journalEntry);
+  res.json({
+    status: 'success',
+    msg: 'Valores encontrados',
+    data: journalEntry.toJSON(),
+  });
 };
 const createJournalEntry = async (req, res) => {
   const { id } = req.user;
