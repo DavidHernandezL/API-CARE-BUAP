@@ -10,19 +10,29 @@ const login = async (req, res) => {
     const userFounded = await User.findOne({ studentId });
 
     if (!userFounded)
-      return res.status(400).json({ msg: 'Matricula o contraseña incorrectos' });
+      return res
+        .status(400)
+        .json({ status: 'error', msg: 'Matricula o contraseña incorrectos.' });
 
     const isMatch = bcrypt.compareSync(password, userFounded.password);
 
     if (!isMatch)
-      return res.status(400).json({ msg: 'Matricula o contraseña incorrectos' });
+      return res
+        .status(400)
+        .json({ status: 'error', msg: 'Matricula o contraseña incorrectos.' });
 
     const token = await createAccessToken({ id: userFounded._id }, '30d');
-    res.cookie('token', token);
-    res.json(userFounded);
+    res.cookie('token', token, {
+      sameSite: 'none',
+      secure: true,
+      httpOnly: false,
+    });
+    res.json({
+      status: 'success',
+      msg: 'Usuario autenticado',
+      data: userFounded.toJSON(),
+    });
   } catch (error) {
-    
-
     return res.status(500).json({
       msg: 'Fallo en el servidor',
     });
@@ -94,7 +104,6 @@ const resetPassword = async (req, res) => {
 
     res.json({ status: 'OK', message: 'Contraseña actualizada' });
   } catch (error) {
-    
     return res.status(500).json({
       errors: [{ msg: 'Error en el servidor' }],
     });

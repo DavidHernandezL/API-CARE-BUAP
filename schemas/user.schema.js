@@ -11,7 +11,7 @@ const createUserSchema = z.object({
     })
     .positive('No puede ser negativo')
     .int('La matricula debe ser un número entero')
-    .min(200000000, 'La matricula debe tener 10 caracteres'),
+    .min(100000000, 'La matricula debe tener 9 caracteres'),
   email: z
     .string({ required_error: 'El correo es requerido' })
     .email('El correo no es válido')

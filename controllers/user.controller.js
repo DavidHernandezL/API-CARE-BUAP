@@ -15,6 +15,26 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
   const { fullName, studentId, email, password } = req.body;
 
+  const isEmailRegistered = await User.findOne({ email });
+
+  if (isEmailRegistered) {
+    return res.status(400).json({
+      status: 'error',
+      msg: 'El correo ya está registrado',
+      data: { email },
+    });
+  }
+
+  const isStudentIdRegistered = await User.findOne({ studentId });
+
+  if (isStudentIdRegistered) {
+    return res.status(400).json({
+      status: 'error',
+      msg: 'La matricula ya está registrada',
+      data: { studentId },
+    });
+  }
+
   try {
     const salt = bcrypt.genSaltSync();
     const passwordEncrypted = bcrypt.hashSync(password, salt);
@@ -26,15 +46,16 @@ const createUser = async (req, res) => {
     });
 
     const userSaved = await user.save();
-    const token = await createAccessToken({ id: userSaved._id }, '30d');
-    res.cookie('token', token);
-    res.json(userSaved);
-  } catch (error) {
-    
 
-    res.status(500).json({
-      msg: 'Fallo en el servidor',
+    const token = await createAccessToken({ id: userSaved._id }, '30d');
+    res.cookie('token', token, {
+      sameSite: 'none',
+      secure: true,
+      httpOnly: false,
     });
+    res.json({ status: 'success', msg: 'Usuario creado', data: userSaved.toJSON() });
+  } catch (error) {
+    res.status(500).json({ status: 'error', msg: 'Fallo del servidor', data: error });
   }
 };
 
