@@ -24,14 +24,16 @@ class Server {
   middlewares() {
     this.app.use(
       cors({
-        origin: 'http://localhost:5173',
+        origin: process.env.FRONTEND_URL,
         credentials: true,
       })
     );
 
     this.app.use(express.json());
 
-    this.app.use(morgan('dev'));
+    if (process.env.NODE_ENV === 'development') {
+      this.app.use(morgan('dev'));
+    }
 
     this.app.use(express.urlencoded({ extended: false }));
 

@@ -23,9 +23,9 @@ const login = async (req, res) => {
 
     const token = await createAccessToken({ id: userFounded._id }, '30d');
     res.cookie('token', token, {
-      sameSite: 'none',
-      secure: true,
+      sameSite: 'None',
       httpOnly: false,
+      secure: true,
     });
     res.json({
       status: 'success',
