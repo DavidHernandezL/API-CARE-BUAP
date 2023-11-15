@@ -10,6 +10,8 @@ const { Auth } = require('../controllers');
 
 const router = Router();
 
+router.get('/verify', Auth.verifyToken);
+
 router.post('/login', validateRequestBody(loginSchema), Auth.login);
 
 router.post('/logout', Auth.logout);

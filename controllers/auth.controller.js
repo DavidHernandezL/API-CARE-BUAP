@@ -22,11 +22,7 @@ const login = async (req, res) => {
         .json({ status: 'error', msg: 'Matricula o contraseña incorrectos.' });
 
     const token = await createAccessToken({ id: userFounded._id }, '30d');
-    res.cookie('token', token, {
-      sameSite: 'None',
-      httpOnly: false,
-      secure: true,
-    });
+    res.cookie('token', token);
     res.json({
       status: 'success',
       msg: 'Usuario autenticado',
@@ -110,9 +106,31 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const verifyToken = async (req, res) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(401).json({ status: 'error', msg: 'Token no válido' });
+  }
+
+  try {
+    const { id } = await verifyAccessToken(token);
+    const userFounded = await User.findById(id);
+
+    if (!userFounded) {
+      return res.status(401).json({ status: 'error', msg: 'Token no válido' });
+    }
+
+    res.json({ status: 'OK', msg: 'Token válido', data: userFounded.toJSON() });
+  } catch (error) {
+    return res.status(401).json({ status: 'error', msg: 'Token no válido' });
+  }
+};
+
 module.exports = {
   login,
   logout,
   recoveryPassword,
   resetPassword,
+  verifyToken,
 };

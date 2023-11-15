@@ -3,7 +3,7 @@ const { Journal } = require('../models');
 const getJournal = async (req, res) => {
   const { id } = req.user;
   const diary = await Journal.find({ user: id });
-  res.json(diary);
+  res.json({ status: 'success', msg: 'Valores encontrados', data: diary });
 };
 const getJournalEntry = async (req, res) => {
   const { id } = req.user;

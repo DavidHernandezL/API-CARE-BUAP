@@ -3,10 +3,18 @@ const cors = require('cors');
 const morgan = require('morgan');
 const cookies = require('cookie-parser');
 const { createConnectionDB } = require('../config');
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
 
 class Server {
   constructor() {
+    const options = {
+      key: fs.readFileSync(path.join(__dirname, '../cert/key.pem')),
+      cert: fs.readFileSync(path.join(__dirname, '../cert/cert.pem')),
+    };
     this.app = express();
+
     this.port = process.env.PORT;
 
     this.paths = {
@@ -19,6 +27,7 @@ class Server {
     this.dbConnection();
     this.middlewares();
     this.routes();
+    this.apps = https.createServer(options, this.app);
   }
 
   middlewares() {
@@ -31,9 +40,7 @@ class Server {
 
     this.app.use(express.json());
 
-    if (process.env.NODE_ENV === 'development') {
-      this.app.use(morgan('dev'));
-    }
+    this.app.use(morgan('dev'));
 
     this.app.use(express.urlencoded({ extended: false }));
 

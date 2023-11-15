@@ -29,4 +29,15 @@ const diarySchema = new Schema(
   }
 );
 
+diarySchema.methods.toJSON = function () {
+  const { __v, password, _id, date, ...user } = this.toObject();
+  user.uid = _id;
+  user.date = date.toLocaleString('es-MX', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  });
+  return user;
+};
+
 module.exports = model('Journal', diarySchema);
