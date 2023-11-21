@@ -1,14 +1,13 @@
 {
   "name": "api-care-buap",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "David Hernández López",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -24,5 +23,14 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidHernandezL/API-CARE-BUAP.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DavidHernandezL/API-CARE-BUAP/issues"
+  },
+  "homepage": "https://github.com/DavidHernandezL/API-CARE-BUAP#readme",
+  "description": ""
 }
