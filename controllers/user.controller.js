@@ -57,7 +57,7 @@ const createUser = async (req, res) => {
     const token = await createAccessToken({ id: userSaved._id }, '30d');
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
     });
     res.json({ status: 'success', msg: 'Usuario creado', data: userSaved.toJSON() });
