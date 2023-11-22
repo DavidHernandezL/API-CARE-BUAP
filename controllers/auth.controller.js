@@ -22,7 +22,11 @@ const login = async (req, res) => {
         .json({ status: 'error', msg: 'Matricula o contraseña incorrectos.' });
 
     const token = await createAccessToken({ id: userFounded._id }, '30d');
-    res.cookie('token', token);
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+    });
     res.json({
       status: 'success',
       msg: 'Usuario autenticado',
