@@ -5,7 +5,7 @@ const { verifyAuthToken, validateRequestBody } = require('../middlewares');
 
 const router = Router();
 
-router.get('/', verifyAuthToken, User.getUser);
+router.get('/', verifyAuthToken, User.getUsers);
 
 router.post('/', validateRequestBody(createUserSchema), User.createUser);
 

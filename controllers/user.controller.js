@@ -2,18 +2,24 @@ const bcrypt = require('bcryptjs');
 const { User } = require('../models/');
 const { createAccessToken } = require('../utils');
 
-const getUser = async (req, res) => {
-  const { id } = req.user;
+const getUsers = async (req, res) => {
+  const { limit = 5 } = req.query;
+  let users = [];
 
-  const userFounded = await User.findById(id);
-
-  if (!userFounded) return res.status(400).json({ msg: 'El usuario no existe' });
-
-  res.json(userFounded);
+  if (!limit) {
+    users = await User.find().sort({ createdAt: -1 });
+  } else {
+    users = await User.find().sort({ createdAt: -1 }).limit(parseInt(limit));
+  }
+  res.json({
+    status: 'success',
+    msg: 'Usuarios obtenidos',
+    data: users,
+  });
 };
 
 const createUser = async (req, res) => {
-  const { fullName, studentId, email, password } = req.body;
+  const { fullName, studentId, email, password, image } = req.body;
 
   const isEmailRegistered = await User.findOne({ email });
 
@@ -43,6 +49,7 @@ const createUser = async (req, res) => {
       studentId,
       email,
       password: passwordEncrypted,
+      image,
     });
 
     const userSaved = await user.save();
@@ -76,7 +83,7 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = {
-  getUser,
+  getUsers,
   createUser,
   updateUser,
 };

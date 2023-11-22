@@ -22,6 +22,8 @@ class Server {
       users: '/api/users',
       journals: '/api/journals',
       chats: '/api/chats',
+      exercises: '/api/exercises',
+      professionals: '/api/professionals',
     };
 
     this.dbConnection();
@@ -54,6 +56,8 @@ class Server {
     this.app.use(this.paths.users, require('../routes/user.routes'));
     this.app.use(this.paths.journals, require('../routes/journal.routes'));
     this.app.use(this.paths.chats, require('../routes/chat.routes'));
+    this.app.use(this.paths.exercises, require('../routes/exercise.routes'));
+    this.app.use(this.paths.professionals, require('../routes/professional.routes'));
   }
 
   dbConnection() {
