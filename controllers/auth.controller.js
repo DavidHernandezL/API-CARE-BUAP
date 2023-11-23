@@ -69,7 +69,7 @@ const recoveryPassword = async (req, res) => {
         errors: [{ msg: 'Error al enviar el correo' }],
       });
     } else {
-      res.json({ msg: 'Correo enviado' });
+      res.json({ status: 'OK', msg: 'Correo enviado' });
     }
   });
 };
