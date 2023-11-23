@@ -50,9 +50,7 @@ const recoveryPassword = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.status(400).json({
-      errors: [{ msg: 'El correo no esta registrado' }],
-    });
+    return res.status(400).json({ msg: 'El correo no esta registrado' });
   }
 
   const recoveryAccessToken = await createAccessToken({ id: user._id }, '1h');
@@ -71,7 +69,7 @@ const recoveryPassword = async (req, res) => {
         errors: [{ msg: 'Error al enviar el correo' }],
       });
     } else {
-      res.json({ message: 'Correo enviado' });
+      res.json({ msg: 'Correo enviado' });
     }
   });
 };

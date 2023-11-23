@@ -45,21 +45,27 @@ const createExercise = async (req, res) => {
     const exerciseSaved = await exercise.save();
     res.json({ status: 'success', msg: 'Ejercicio creado', data: exercise.toJSON() });
   } catch (error) {
+    console.log('create error', error);
     res.status(500).json({ status: 'error', msg: 'Fallo del servidor', data: error });
   }
 };
 
 const updateExercise = async (req, res) => {
-  const { id } = req.params;
-  const { ...rest } = req.body;
+  try {
+    const { id } = req.params;
+    const { ...rest } = req.body;
+    console.log(rest);
 
-  console.log(rest);
+    console.log(rest);
 
-  const userUpdate = await Exercise.findByIdAndUpdate(id, { ...rest }, { new: true });
+    const userUpdate = await Exercise.findByIdAndUpdate(id, { ...rest }, { new: true });
 
-  res.json({
-    userUpdate,
-  });
+    res.json({
+      userUpdate,
+    });
+  } catch (error) {
+    res.status(500).json({ status: 'error', msg: 'Fallo del servidor', data: error });
+  }
 };
 
 const deleteExercise = async (req, res) => {
