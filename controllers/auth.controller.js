@@ -54,10 +54,10 @@ const recoveryPassword = async (req, res) => {
   }
 
   const recoveryAccessToken = await createAccessToken({ id: user._id }, '1h');
-  const resetPasswordUrl = `http://localhost:5173/reset-password/${user._id}/${recoveryAccessToken}`;
+  const resetPasswordUrl = `http://${process.env.FRONTEND_URL}/reset-password/${user._id}/${recoveryAccessToken}`;
 
   const mailOptions = {
-    from: 'CARE BUAP <warningxbox@gmail.com>',
+    from: 'CARE BUAP <carebuap@gmail.com>',
     to: email,
     subject: 'Recuperación de contraseña',
     html: htmlMail(user.fullName, resetPasswordUrl),
