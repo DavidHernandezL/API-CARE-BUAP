@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const loginSchema = z.object({
   studentId: z
     .number({
-      invalid_type_error: 'La matricula debe ser un número',
-      required_error: 'La matricula es requerida',
+      invalid_type_error: 'La matrícula debe ser un número',
+      required_error: 'La matrícula es requerida',
     })
     .positive('No puede ser negativo'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),

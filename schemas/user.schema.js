@@ -6,12 +6,12 @@ const createUserSchema = z.object({
     .min(3, 'El nombre debe tener al menos 3 caracteres'),
   studentId: z
     .number({
-      invalid_type_error: 'La matricula debe ser un número',
-      required_error: 'La matricula es requerida',
+      invalid_type_error: 'La matrícula debe ser un número',
+      required_error: 'La matrícula es requerida',
     })
     .positive('No puede ser negativo')
-    .int('La matricula debe ser un número entero')
-    .min(100000000, 'La matricula debe tener 9 caracteres'),
+    .int('La matrícula debe ser un número entero')
+    .min(100000000, 'La matrícula debe tener 9 dígitos'),
   email: z
     .string({ required_error: 'El correo es requerido' })
     .email('El correo no es válido')

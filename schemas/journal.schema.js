@@ -2,7 +2,7 @@ const { z } = require('zod');
 
 const createJournalSchema = z.object({
   title: z
-    .string({ required_error: 'El titulo es requerido' })
+    .string({ required_error: 'El título es requerido' })
     .min(3, 'El título debe tener al menos 3 caracteres'),
   description: z
     .string({ required_error: 'La descripción es requerida' })

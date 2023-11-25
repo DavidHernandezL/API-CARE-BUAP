@@ -12,18 +12,18 @@ const login = async (req, res) => {
     if (!userFounded)
       return res
         .status(400)
-        .json({ status: 'error', msg: 'Matricula o contraseña incorrectos.' });
+        .json({ status: 'error', msg: 'Matrícula o contraseña incorrectos.' });
 
     const isMatch = bcrypt.compareSync(password, userFounded.password);
 
     if (!isMatch)
       return res
         .status(400)
-        .json({ status: 'error', msg: 'Matricula o contraseña incorrectos.' });
+        .json({ status: 'error', msg: 'Matrícula o contraseña incorrectos.' });
 
     const token = await createAccessToken({ id: userFounded._id }, '30d');
     res.cookie('token', token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: 'none',
     });
