@@ -5,14 +5,11 @@ const cookies = require('cookie-parser');
 const { createConnectionDB } = require('../config');
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
+const http = require('http');
+const { Server: Socket } = require('socket.io');
 
 class Server {
   constructor() {
-    const options = {
-      key: fs.readFileSync(path.join(__dirname, '../cert/key.pem')),
-      cert: fs.readFileSync(path.join(__dirname, '../cert/cert.pem')),
-    };
     this.app = express();
 
     this.port = process.env.PORT;
@@ -24,12 +21,12 @@ class Server {
       chats: '/api/chats',
       exercises: '/api/exercises',
       professionals: '/api/professionals',
+      bot: '/api/bot',
     };
 
     this.dbConnection();
     this.middlewares();
     this.routes();
-    this.apps = https.createServer(options, this.app);
   }
 
   middlewares() {
@@ -58,16 +55,11 @@ class Server {
     this.app.use(this.paths.chats, require('../routes/chat.routes'));
     this.app.use(this.paths.exercises, require('../routes/exercise.routes'));
     this.app.use(this.paths.professionals, require('../routes/professional.routes'));
+    this.app.use(this.paths.bot, require('../routes/bot.routes'));
   }
 
   dbConnection() {
     createConnectionDB();
-  }
-
-  start() {
-    this.app.listen(this.port, () => {
-      console.log(`Servidor escuchando en el puerto ${this.port}`);
-    });
   }
 }
 

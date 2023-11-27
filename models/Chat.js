@@ -13,6 +13,10 @@ const chatSchema = new Schema(
     },
     messages: [
       {
+        role: {
+          type: String,
+          required: [true, 'User is required'],
+        },
         content: {
           type: String,
           required: [true, 'Message is required'],
