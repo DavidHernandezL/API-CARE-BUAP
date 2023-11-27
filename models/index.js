@@ -6,10 +6,10 @@ const Exercise = require('./Exercise');
 const Professional = require('./Professional');
 
 module.exports = {
-  Server,
-  User,
-  Journal,
-  Chat,
-  Exercise,
-  Professional,
+	Server,
+	User,
+	Journal,
+	Chat,
+	Exercise,
+	Professional,
 };

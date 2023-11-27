@@ -4,14 +4,12 @@ const Journal = require('./journal.controller');
 const Chat = require('./chat.controller');
 const Exercise = require('./exercise.controller');
 const Professional = require('./professional.controller');
-const Bot = require('./bot.controller');
 
 module.exports = {
-  Auth,
-  User,
-  Journal,
-  Chat,
-  Professional,
-  Exercise,
-  Bot,
+	Auth,
+	User,
+	Journal,
+	Chat,
+	Professional,
+	Exercise,
 };

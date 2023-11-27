@@ -1,17 +1,17 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: process.env.HOST,
-  port: process.env.EMAIL_PORT,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-  },
+	host: process.env.HOST,
+	port: process.env.EMAIL_PORT,
+	secure: true,
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.PASSWORD,
+	},
 });
 
 const htmlMail = (fullName, resetUrl) => {
-  return `
+	return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html
     dir="ltr"
@@ -707,6 +707,6 @@ const htmlMail = (fullName, resetUrl) => {
 };
 
 module.exports = {
-  transporter,
-  htmlMail,
+	transporter,
+	htmlMail,
 };

@@ -2,14 +2,9 @@ const { Router } = require('express');
 
 const { Professional } = require('../controllers');
 
-const {
-  verifyAuthToken,
-  validateRequestParams,
-  validateRequestBody,
-} = require('../middlewares');
-const { chatParamsSchema, chatSchema, messageSchema } = require('../schemas/chat.schema');
+const { verifyAuthToken } = require('../middlewares');
 
-const router = Router();
+const router = new Router();
 
 router.get('/', verifyAuthToken, Professional.getProfessionals);
 router.get('/:id', verifyAuthToken, Professional.getProfessional);
