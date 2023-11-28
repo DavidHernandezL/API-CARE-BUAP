@@ -36,7 +36,7 @@ const createUser = async (req, res) => {
 	if (isStudentIdRegistered) {
 		return res.status(400).json({
 			status: 'error',
-			msg: 'La matricula ya está registrada',
+			msg: 'La matrícula ya está registrada',
 			data: { studentId },
 		});
 	}
