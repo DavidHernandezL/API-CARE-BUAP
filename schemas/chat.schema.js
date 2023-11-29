@@ -15,14 +15,7 @@ const chatSchema = z.object({
 });
 
 const messageSchema = z.object({
-	content: z.object({
-		user: z.string({
-			required_error: 'El usuario es requerido',
-		}),
-		message: z.string({
-			required_error: 'El mensaje es requerido',
-		}),
-	}),
+	messages: z.array(),
 });
 
 module.exports = {

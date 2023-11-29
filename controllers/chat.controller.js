@@ -29,20 +29,22 @@ const createChat = async (req, res) => {
 
 const addMessage = async (req, res) => {
 	const { chatId } = req.params;
-	const { content: message } = req.body;
+	const { messages } = req.body;
+
 	const chat = await Chat.findById(chatId);
 	if (!chat) return res.status(400).json({ msg: 'El chat no existe' });
-	chat.messages.push({ role: message.user, content: message.message });
+	console.log(messages);
+	chat.messages = messages;
 
-	const messages = chat.messages.map(message => ({
-		role: message.role,
-		content: message.content,
-	}));
+	// const messages = chat.messages.map(message => ({
+	// 	role: message.role,
+	// 	content: message.content,
+	// }));
 	const botMessage = await botResponse(messages);
-	console.log(botMessage);
+	// console.log(botMessage);
 	chat.messages.push(botMessage);
 	await chat.save();
-	res.json(chat.messages);
+	res.json(chat.toJSON().messages);
 };
 
 const deleteChat = async (req, res) => {

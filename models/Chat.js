@@ -21,10 +21,6 @@ const chatSchema = new Schema(
 					type: String,
 					required: [true, 'Message is required'],
 				},
-				date: {
-					type: Date,
-					default: Date.now,
-				},
 			},
 		],
 	},
@@ -32,5 +28,16 @@ const chatSchema = new Schema(
 		timestamps: true,
 	},
 );
+
+chatSchema.methods.toJSON = function () {
+	// eslint-disable-next-line no-unused-vars
+	const { __v, ...chat } = this.toObject();
+
+	chat.messages = chat.messages.map(message => ({
+		role: message.role,
+		content: message.content,
+	}));
+	return chat;
+};
 
 module.exports = model('Chat', chatSchema);

@@ -7,11 +7,7 @@ const {
 	validateRequestParams,
 	validateRequestBody,
 } = require('../middlewares');
-const {
-	chatParamsSchema,
-	chatSchema,
-	messageSchema,
-} = require('../schemas/chat.schema');
+const { chatParamsSchema, chatSchema } = require('../schemas/chat.schema');
 
 const router = new Router();
 
@@ -35,7 +31,6 @@ router.post(
 	'/:chatId',
 	verifyAuthToken,
 	validateRequestParams(chatParamsSchema),
-	validateRequestBody(messageSchema),
 	Chat.addMessage,
 );
 router.delete(
