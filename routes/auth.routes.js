@@ -8,6 +8,7 @@ const {
 const {
 	validateRequestBody,
 	validateRequestParams,
+	verifyAuthToken,
 } = require('../middlewares');
 const { Auth } = require('../controllers');
 
@@ -33,5 +34,7 @@ router.post(
 	],
 	Auth.resetPassword,
 );
+
+router.post('/change-password', verifyAuthToken, Auth.changePassword);
 
 module.exports = router;

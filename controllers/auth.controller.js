@@ -131,10 +131,36 @@ const verifyToken = async (req, res) => {
 	}
 };
 
+const changePassword = async (req, res) => {
+	const { id } = req.user;
+	const { password } = req.body;
+
+	const userFounded = await User.findById(id);
+
+	if (!userFounded) {
+		return res.status(400).json({ msg: 'El usuario no existe' });
+	}
+
+	try {
+		const salt = bcrypt.genSaltSync();
+		const newPasswordHashed = bcrypt.hashSync(password, salt);
+		userFounded.password = newPasswordHashed;
+
+		await userFounded.save();
+
+		res.json({ status: 'OK', message: 'Contraseña actualizada' });
+	} catch (error) {
+		return res.status(500).json({
+			errors: [{ msg: 'Error en el servidor' }],
+		});
+	}
+};
+
 module.exports = {
 	login,
 	logout,
 	recoveryPassword,
 	resetPassword,
 	verifyToken,
+	changePassword,
 };
