@@ -5,7 +5,6 @@ const validateRequestBody = schema => (req, res, next) => {
 		schema.parse(req.body);
 		next();
 	} catch (error) {
-		console.log(error);
 		if ((!error) instanceof ZodError)
 			res.status(500).json({ msg: 'Error en el servidor' });
 		res.status(400).json({ errors: error.issues.map(issue => issue.message) });

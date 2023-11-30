@@ -41,7 +41,7 @@ const getProfessional = async (req, res) => {
 const createProfessional = async (req, res) => {
 	const { type, page, address, fullName, image } = req.body;
 
-	console.log(req.body);
+	
 	try {
 		const professional = new Professional({
 			type,
@@ -59,7 +59,7 @@ const createProfessional = async (req, res) => {
 			data: professionalSaved.toJSON(),
 		});
 	} catch (error) {
-		console.log(error);
+		
 		res
 			.status(500)
 			.json({ status: 'error', msg: 'Fallo del servidor', data: error });

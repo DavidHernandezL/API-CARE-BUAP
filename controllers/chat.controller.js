@@ -33,7 +33,7 @@ const addMessage = async (req, res) => {
 
 	const chat = await Chat.findById(chatId);
 	if (!chat) return res.status(400).json({ msg: 'El chat no existe' });
-	console.log(messages);
+	
 	chat.messages = messages;
 
 	// const messages = chat.messages.map(message => ({
@@ -41,7 +41,7 @@ const addMessage = async (req, res) => {
 	// 	content: message.content,
 	// }));
 	const botMessage = await botResponse(messages);
-	// console.log(botMessage);
+	// 
 	chat.messages.push(botMessage);
 	await chat.save();
 	res.json(chat.toJSON().messages);

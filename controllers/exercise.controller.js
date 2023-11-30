@@ -47,7 +47,7 @@ const createExercise = async (req, res) => {
 			data: exercise.toJSON(),
 		});
 	} catch (error) {
-		console.log('create error', error);
+		
 		res
 			.status(500)
 			.json({ status: 'error', msg: 'Fallo del servidor', data: error });
@@ -58,9 +58,9 @@ const updateExercise = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { ...rest } = req.body;
-		console.log(rest);
+		
 
-		console.log(rest);
+		
 
 		const userUpdate = await Exercise.findByIdAndUpdate(
 			id,
